@@ -1,0 +1,25 @@
+---
+# tasks file for webapps
+- name: deployment of apache
+  package:
+         name: httpd
+         state: present
+- name: copy the index file
+  copy:
+      src: "index.html"
+      dest: "/var/www/html/"
+      owner:  apache
+      group:  apache
+      mode: "0644"
+  notify: restart service
+#- name: restart the service
+#  service:
+#          name: httpd
+#          state: started
+- name: enable the service
+  systemd:
+           name: httpd
+           enabled: yes
+
+   
+       

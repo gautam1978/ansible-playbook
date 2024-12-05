@@ -1,0 +1,12 @@
+---
+- name: delete users from servers
+  hosts: all
+  become: yes
+  tasks:
+      - name: remove users from server 
+        user:
+             name: ansible
+             name: joe
+             state: absent
+
+       

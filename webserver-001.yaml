@@ -1,0 +1,35 @@
+---
+- name: http deployment on Linux servers
+  hosts: all
+  become: true
+  tasks:
+        - name: deployment of redhat servers
+          package:
+                  name: httpd
+                  state: present
+          when: ansible_facts['os_family'] == "RedHat"
+
+        - name: deployment on Debian & Ubuntu
+          package:
+                  name: apache2
+                  state: present
+          when: ansible_os_family == "Debian" or  ansible_os_family == "Ubuntu"
+    
+        - name: copy the index files
+          copy:
+                src: /home/ec2-user/ansible/index.html
+                dest: /var/www/html/index.html
+                owner: apache
+                group: apache
+                mode: '0644'
+        - name: service start on Redhat
+          service:
+                   name: httpd
+                   state: started
+          when: ansible_os_family == "RedHat"
+        - name: service start on Ubuntu and Debian
+          service:
+                   name: apache2
+                   state: started
+          when: ansible_os_family == "Ubuntu" or ansible_os_family == "Debian"
+

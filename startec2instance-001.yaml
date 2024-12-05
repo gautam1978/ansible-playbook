@@ -1,0 +1,23 @@
+---
+- name: Start EC2 instances
+  hosts: localhost
+  gather_facts: no
+  collections:
+    - amazon.aws
+
+  vars:
+    region: "us-west-2"          # AWS region
+    instance_ids:
+      - "i-0bd179b194fce0f50"    # List of EC2 instance IDs to start
+
+  tasks:
+    - name: Start EC2 instances by instance IDs
+      amazon.aws.ec2_instance:
+        region: "{{ region }}"
+        instance_ids: "{{ instance_ids }}"
+        state: started
+      register: ec2_start_results
+
+    - name: Output the started instances' information
+      debug:
+        var: ec2_start_results.instances

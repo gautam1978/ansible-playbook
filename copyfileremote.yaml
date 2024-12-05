@@ -1,0 +1,11 @@
+---
+- name: copy file from remote host
+  hosts: all:!'172.31.4.218'
+  become: true
+  tasks:
+       - name: copy files from remote location
+         synchronize:
+                    src: /tmp/index.html
+                    dest: /tmp/
+         delegate_to: '172.31.4.218'
+

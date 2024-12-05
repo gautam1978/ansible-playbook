@@ -1,0 +1,39 @@
+---
+- name: system update and a kernel version
+  hosts: all
+  become: true
+  tasks:
+       - name: display the current kernel version 
+         command:
+                 uname -a
+         register: p
+       - debug:
+               var: p.stdout
+          
+       - name: system patch update 
+         yum:
+             name: '*'
+             state: latest 
+         when: ansible_os_family == "RedHat" or ansible_os_family == "CentOS"
+       - name: display the updated kernel after patching
+         command:
+                 uname -a
+         register: new
+       - debug:
+              var: new.stdout
+                 
+       - name: system update for Ubuntu and Debian
+         apt:
+             name: '*'
+             state: latest
+         when: ansible_os_family == "Debian" or ansible_os_family == "Ubuntu"
+       - name: Reboot the systems 
+         reboot:
+
+       - name: display the updated kernel version
+         command:
+                 uname -a
+         register: ubunew
+       - debug:  
+               var: ubunew.stdout  
+           

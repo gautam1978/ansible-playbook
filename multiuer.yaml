@@ -1,0 +1,19 @@
+---
+- name: new joineees user setup
+  hosts: all
+  become: true
+  vars:
+       new_users:
+              - joe
+              - denim
+              - mallu
+              - samiyak
+  tasks:
+       - name: adding the users  
+         user:
+             name: "{{item}}"
+             state: present
+             password: echo@123
+         loop: "{{new_users}}" 
+              
+       

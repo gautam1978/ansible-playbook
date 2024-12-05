@@ -1,0 +1,13 @@
+---
+- name: installing services on servers
+  hosts: all
+  become: yes
+  tasks:
+       - name: installing package
+         package:
+                 name:
+                   - wget
+                   - telnet
+                   - dos2unix 
+                   - rsync
+                 state: present

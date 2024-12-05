@@ -1,0 +1,6 @@
+---
+- name: web server role demo
+  hosts: web-servers
+  become: true
+  roles:
+      - webapps

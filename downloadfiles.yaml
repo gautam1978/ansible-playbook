@@ -1,0 +1,25 @@
+---
+ - name: download jenkins war file
+   hosts: web-servers
+   tasks:
+     - name: create a directory
+       file:
+          path: /home/ec2-user/jenkins
+          state: directory
+          mode: 0755
+     - name: download jenkins war 
+       get_url:
+              url: https://updates.jenkins.io/download/war/2.482/jenkins.war
+              dest: /home/ec2-user/jenkins/
+     - name: create a tomcat directory
+       file:
+           path: /home/ec2-user/tomcat
+           state: directory
+           mode: 0755
+     - name: download tomcat 
+       get_url: 
+              url: https://dlcdn.apache.org/tomcat/tomcat-11/v11.0.0/bin/apache-tomcat-11.0.0.tar.gz
+              dest: /home/ec2-user/tomcat 
+     - name: extract the tar file
+       shell: cd /home/ec2-user/tomcat/ && tar -xvzf apache-tomcat-11.0.0.tar.gz
+     

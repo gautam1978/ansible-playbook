@@ -1,0 +1,19 @@
+---
+- name: stop ec2 instances
+  hosts: localhost
+  gather_facts: no
+  vars:
+     instance_ids:
+                 - "i-0bd179b194fce0f50"
+                 - "i-020cb867221999471"
+                 - "i-0f4718d68bf6cbbfd"
+                 - "i-0035871edbf85ffb6"
+     region: "us-east-2"
+  tasks:
+      - name: stoping the instances
+        ec2_instance:
+                      instance_ids: "{{instance_ids}}"
+                      region: "{{region}}"
+                      state: stopped
+                 
+     

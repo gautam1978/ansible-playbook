@@ -1,0 +1,31 @@
+---
+- name: web-server
+  hosts : all
+  become: true
+  tasks:
+       - name:  web service deployment
+         package :
+              name: httpd
+              state: present
+       - name: web service start
+         service:
+                 name: httpd
+                 state: started
+      
+       - name: copy index file to httpd
+         copy:
+              src: /home/ec2-user/ansible/index.html
+              dest: /var/www/html/index.html
+              owner: apache
+              group: apache
+              mode: '0644'
+       - name: restart apache
+         service:
+                  name: httpd
+                  state: restarted                      
+         
+       - name: enable the service
+         systemd:
+                 name: httpd
+                 enabled: yes
+

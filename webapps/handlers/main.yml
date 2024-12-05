@@ -1,0 +1,7 @@
+---
+# handlers file for webapps
+- name: restart service
+  service:
+         name: httpd
+         state: started
+

@@ -1,0 +1,22 @@
+---
+- name: checking file exist 
+  hosts: web-servers
+  become: true
+  tasks:
+       - name: check ansible.cfg file exists
+         stat:
+              path: "/etc/ansible/ansible.cfg"
+         register: checkfile
+       - debug:
+               msg: " file exits..."
+         when: checkfile.stat.exists
+       - debug:
+               msg: " file donot exits.."
+         when: checkfile.stat.exists == False
+       - name: create a file if not existing
+         file:
+              path: "/etc/ansible/ansible.cfg"
+              state: touch
+         when: checkfile.stat.exists == False
+        
+              

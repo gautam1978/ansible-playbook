@@ -1,0 +1,15 @@
+---
+- name: add new users
+  hosts: all
+  become: yes
+  tasks:
+       - name: new users
+         user:
+              name: ansible
+              password: echo123
+              state: present
+       - name: add user
+         user:
+              name: joe
+              password: echo123
+              state: present  

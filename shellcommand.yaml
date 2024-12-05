@@ -1,0 +1,17 @@
+---
+- name: test to run shell command
+  hosts: all
+  become: true
+  tasks:
+       - name: run linux command
+         shell: fdisk -l
+         register: result
+       - debug:
+               var: result.stdout
+ 
+       - name: dir list home
+         command: ls -lrt /home
+         register: lists
+       - debug:
+               var: lists.stdout
+           

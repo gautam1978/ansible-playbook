@@ -1,0 +1,25 @@
+---
+- name: Ubuntu vm os patching
+  hosts: offer_ubuntu_24_04_lts:offer_centos9
+  become: true
+  tasks:
+       - name: system kernel info 
+         shell: /usr/bin/uname -a
+         register: p
+       - name: display the kernel version before update  
+         debug:
+                 msg: "{{p.stdout}}"
+
+       - name: system update  
+         apt:
+                 upgrade: yes
+                 update_cache: yes
+         when: ansible_os_family == "Ubuntu"
+
+       - name: centos update
+         command: yum update -y 
+         when: ansible_os_family == "CentOS"        
+
+
+
+

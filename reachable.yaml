@@ -1,0 +1,8 @@
+---
+- name: ping check servers
+  #hosts: offer_ubuntu_24_04_lts
+  hosts:  all
+  become: true
+  tasks: 
+     - name: testing server reachable
+       ping:
